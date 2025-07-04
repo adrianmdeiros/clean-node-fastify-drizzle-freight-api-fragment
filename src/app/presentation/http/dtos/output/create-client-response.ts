@@ -1,3 +1,4 @@
+
 export type CreateClientResponse = {
     id: string
     name: string

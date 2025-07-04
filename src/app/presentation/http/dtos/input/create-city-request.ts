@@ -1,7 +1,7 @@
-import { z } from "zod"
+import { z } from "zod" // validacao
 
 export const citySchema = z.object({
-    name: z.string().min(10).max(30),
+    name: z.string().min(4).max(30),
     uf: z.string().min(2).max(2),
     tax: z.number()
       .min(0.01)

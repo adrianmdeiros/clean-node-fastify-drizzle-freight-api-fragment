@@ -1,4 +1,4 @@
-import { IClientsRepository } from "../../domain/repositories/clients";
+import { IClientRepository } from "../../domain/repositories/client";
 import { clientSchema, CreateClientRequest } from "../../presentation/http/dtos/input/create-client-request";
 import { CreateClientResponse } from "../../presentation/http/dtos/output/create-client-response";
 import { ClientFactory } from "../factories/client";
@@ -6,12 +6,16 @@ import { ClientFactory } from "../factories/client";
 export class CreateClientUseCase {
     constructor(
         private readonly clientFactory: ClientFactory,
-        private readonly clientRepository: IClientsRepository
+        private readonly clientRepository: IClientRepository
     ) { }
 
     async execute(dto: CreateClientRequest): Promise<CreateClientResponse> {
         const validClient = clientSchema.parse(dto)
-        const client = this.clientFactory.create(validClient)
+        const client = this.clientFactory.create({
+            name: validClient.name,
+            address: validClient.address,
+            phone: validClient.phone
+        })
         const savedClient = await this.clientRepository.save(client)
         return {
             id: savedClient.id,

@@ -1,3 +1,4 @@
+
 export type CreateCityResponse = {
     id: string
     name: string

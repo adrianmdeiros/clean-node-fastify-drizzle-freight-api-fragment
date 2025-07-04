@@ -7,12 +7,12 @@ export const errorHandler = function (
     reply: FastifyReply
 ) {
     return err instanceof APIError ?
-        reply.status(err.statusCode).send({
+        reply.code(err.statusCode).send({
             name: err.name,
             message: err.message
         })
         :
-        reply.status(500).send({
+        reply.code(500).send({
             name: err.name ?? 'Internal Server Error',
             message: 'Internal Server Error'
         })

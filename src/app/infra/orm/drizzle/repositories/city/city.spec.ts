@@ -1,31 +1,26 @@
 import 'dotenv/config'
 import { drizzle } from 'drizzle-orm/libsql'
-import { beforeAll, describe, expect, it, beforeEach, afterAll } from 'vitest'
-import { ICitiesRepository } from '../../../../../domain/repositories/cities'
-import { DrizzleClient } from '../../db'
-import { DrizzleCitiesRepository } from './cities'
-import { cities, clients, freights } from '../../schema'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { City } from '../../../../../domain/entities/city'
+import { ICityRepository } from '../../../../../domain/repositories/citiy'
+import { DrizzleClient } from '../../db'
+import { cities, clients, freights } from '../../schema'
+import { DrizzleCityRepository } from './city'
 
 describe('Cities Repository', () => {
-    let repository: ICitiesRepository
+    let repository: ICityRepository
     let db: DrizzleClient
 
-    beforeAll(() => {
-        db = drizzle(process.env.DB_FILE_NAME!)
-        repository = new DrizzleCitiesRepository(db)
-    })
-
     beforeEach(async () => {
-        if (freights || clients || cities) {
-            await db.delete(freights)
-            await db.delete(clients)
-            await db.delete(cities)
-        }
+        db = drizzle(process.env.DB_FILE_NAME!)
+        repository = new DrizzleCityRepository(db)
+        await db.delete(freights)
+        await db.delete(clients)
+        await db.delete(cities)
     })
 
-    afterAll(() => {
-        db.$client.close()
+    afterEach(async () => {
+        await db.$client.close()
     })
 
 

@@ -1,5 +1,9 @@
-import { CreateFreightResponse } from "../../presentation/http/dtos/output/create-freight-response";
+import { City } from "../entities/city";
+import { Freight } from "../entities/freight";
 
 export interface IFreightService {
-    orderByValue(freights: CreateFreightResponse[]): CreateFreightResponse[]
+    calculate(freight: { weight: number, cityTax: number }): number
+    orderByValue(freights: Freight[]): Freight[]
+    getHigherCost(freight: Freight[]): Freight
+    getCityWithMostFreights(cities: City[]): City
 }

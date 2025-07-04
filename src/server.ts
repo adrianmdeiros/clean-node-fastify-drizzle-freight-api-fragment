@@ -1,5 +1,6 @@
 import fastify from "fastify"
 import { errorHandler } from "./app/presentation/http/middlewares/error-handler"
+import { routes } from "./app/presentation/http/routes"
 
 const server = fastify({
     logger: true
@@ -7,6 +8,7 @@ const server = fastify({
 
 const PORT = parseInt(process.env.SERVER_PORT || '3000')
 
+server.register(routes)
 server.setErrorHandler(errorHandler)
 
 server.get('/', async (request, reply) => {
